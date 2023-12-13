@@ -1,0 +1,9 @@
+li {
+    display: inline;
+    text-align: center;
+}
+
+a {
+    padding: 10px;
+    color: white;
+}

@@ -14,17 +14,6 @@
   max-width: 64rem;
 }
 
-.app__main h1 {
-  text-align: center;
-  margin: 20px
-}
-
-.app__main p {
-  margin: 20px;
-  padding: 15px;
-  border: 2px dotted white;
-}
-
 .app__header,
 .app__footer {
   height: 3rem;
@@ -37,19 +26,10 @@
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   align-content: center;
 }
 
-.app__header li {
-  display: inline;
-  text-align: center;
-}
-
-.app__header a {
-  padding: 10px;
-  color: white;
-}
 
 .app__main {
   min-height: 65vh;
