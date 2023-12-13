@@ -1,5 +1,4 @@
-.app
-{
+.app {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -10,20 +9,48 @@
 
 .app__header,
 .app__main,
-.app__footer
-{
+.app__footer {
   width: 100%;
   max-width: 64rem;
 }
 
-.app__header,
-.app__footer
-{
-  height: 6rem;
-  margin: 3rem 6rem;
+.app__main h1 {
+  text-align: center;
+  margin: 20px
 }
 
-.app__main
-{
-  min-height: calc(100vh - 24rem);
+.app__main p {
+  margin: 20px;
+  padding: 15px;
+  border: 2px dotted white;
+}
+
+.app__header,
+.app__footer {
+  height: 3rem;
+  margin: 3rem 6rem;
+
+}
+
+.app__header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.app__header li {
+  display: inline;
+  text-align: center;
+}
+
+.app__header a {
+  padding: 10px;
+  color: white;
+}
+
+.app__main {
+  min-height: 65vh;
 }

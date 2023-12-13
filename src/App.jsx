@@ -1,0 +1,43 @@
+import { useContext } from "react";
+import { BrowserRouter } from "react-router-dom";
+
+import styles from "./App.module.css";
+import { LoadingContext } from "./context/LoadingProvider";
+import NavigationBar from "./components/NavigationBar/NavigationBar";
+import AppRoute from "./routes/AppRoute";
+import Motto from "./components/Motto/Motto";
+import Loading from "./components/Loading/Loading";
+import Home from "./pages/Home/Home";
+
+function App() {
+  const { isLoading } = useContext(LoadingContext);
+
+  return (
+    <>
+      {
+        // todo wrap with BrowserRouter and render the necessary components
+        <BrowserRouter>
+          <div className={styles["app"]}>
+            <header className={styles["app__header"]}>
+              <NavigationBar />
+            </header>
+
+            <main className={styles["app__main"]}>
+              <AppRoute />
+            </main>
+
+            <footer className={styles["app__footer"]}>
+              <Motto />
+            </footer>
+          </div>
+        </BrowserRouter>
+      }
+
+      {
+        // todo render Loading based on its condition
+      }
+    </>
+  );
+}
+
+export default App;
