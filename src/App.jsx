@@ -7,15 +7,12 @@ import NavigationBar from "./components/NavigationBar/NavigationBar";
 import AppRoute from "./routes/AppRoute";
 import Motto from "./components/Motto/Motto";
 import Loading from "./components/Loading/Loading";
-import Home from "./pages/Home/Home";
 
 function App() {
   const { isLoading } = useContext(LoadingContext);
 
   return (
     <>
-      {
-        // todo wrap with BrowserRouter and render the necessary components
         <BrowserRouter>
           <div className={styles["app"]}>
             <header className={styles["app__header"]}>
@@ -31,11 +28,8 @@ function App() {
             </footer>
           </div>
         </BrowserRouter>
-      }
-
-      {
-        // todo render Loading based on its condition
-      }
+        
+        {isLoading && <Loading />}
     </>
   );
 }

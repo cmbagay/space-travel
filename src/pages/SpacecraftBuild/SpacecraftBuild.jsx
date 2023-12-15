@@ -1,44 +1,78 @@
-import {useState, useContext} from "react";
-import {useNavigate} from "react-router-dom";
+import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./SpacecraftBuild.module.css";
-import {LoadingContext} from "../../context/LoadingProvider";
+import { LoadingContext } from "../../context/LoadingProvider";
 import SpaceTravelApi from "../../services/SpaceTravelApi";
+import SpaceTravelMockApi from "../../services/SpaceTravelMockApi";
 
-function SpacecraftBuild ()
-{
+function SpacecraftBuild() {
   const INITIAL_SPACECRAFT = {
     name: "",
     capacity: "",
     description: "",
-    pictureUrl: ""
+    pictureUrl: "",
   };
   const [spacecraft, setSpacecraft] = useState(INITIAL_SPACECRAFT);
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
-  const {enableLoading, disableLoading} = useContext(LoadingContext);
+  const { enableLoading, disableLoading } = useContext(LoadingContext);
 
-  function handleChangeOfFormInput (event)
-  {
+  function handleChangeOfFormInput(event) {
     // todo update form state
+    const {name, value} = event.target;
+
+    setSpacecraft(newSpacecraft => ( {
+      ...newSpacecraft, [name]: value
+    }))
   }
 
-  async function handleSubmitOfForm (event)
-  {
+  async function handleSubmitOfForm(event) {
     // todo submit the form using the API
-  }
+    event.preventDefault();
 
-  function handleClickOfBack (event)
-  {
+    let {name, capacity, description, pictureUrl} = spacecraft;
+    let isFormError = false;
+    setErrors([]);
+
+    if (name.length === 0){
+      isFormError = true;
+      setErrors(newErrors => ([...newErrors, "please fill in the name field"]));
+    }
+
+    if(!capacity){
+      isFormError = true;
+      setErrors(newErrors => ([...newErrors, "please fill in the capacity field"]));
+    }
+
+    capacity = Number(capacity)
+    if (!Number.isInteger(capacity)){
+      setErrors(newErrors => ([...newErrors, "capacity must be an integer"]));
+    };
+
+    if (!description){
+      isFormError = true;
+      setErrors(newErros =>([...newErros, "please fill in the description"]));
+    }
+
+    if (!isFormError){
+      enableLoading();
+      
+      const {isError} = await SpaceTravelMockApi.buildSpacecraft({name, capacity, description, pictureUrl})
+      if(!isError){setSpacecraft(INITIAL_SPACECRAFT)};
+
+      disableLoading();
+      navigate(`/spacecrafts`);
+    }}
+
+  function handleClickOfBack(event) {
     // todo navigate back
+    navigate(`/spacecrafts`);
   }
 
   return (
     <>
-      <button
-        className={styles["button__back"]}
-        onClick={handleClickOfBack}
-      >
+      <button className={styles["button__back"]} onClick={handleClickOfBack}>
         Back 👈
       </button>
       <div>
@@ -90,19 +124,15 @@ function SpacecraftBuild ()
 
             <div className={styles["submitContainer"]}>
               <div className={styles["errorContainer"]}>
-                {
-                  errors.map((error, index) => <div
-                    key={index}
-                    className={styles["error"]}
-                  >{error}</div>)
-                }
+                {errors.map((error, index) => (
+                  <div key={index} className={styles["error"]}>
+                    {error}
+                  </div>
+                ))}
               </div>
 
               <div className={styles["button__submit"]}>
-                <button
-                  type="submit"
-                  onClick={handleSubmitOfForm}
-                >
+                <button type="submit" onClick={handleSubmitOfForm}>
                   Build 🏗️
                 </button>
               </div>
@@ -113,5 +143,4 @@ function SpacecraftBuild ()
     </>
   );
 }
-
 export default SpacecraftBuild;
